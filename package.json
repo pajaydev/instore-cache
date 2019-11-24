@@ -1,0 +1,12 @@
+{
+  "name": "memory-lite",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Ajaykumar prathap",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "eslint-config-ajay": "^1.0.5"
+  }
+}
