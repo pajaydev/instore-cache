@@ -1,12 +1,16 @@
 {
-  "name": "memory-lite",
+  "name": "instore-cache",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Ajaykumar prathap",
   "license": "MIT",
+  "scripts": {
+    "test": "mocha test.js",
+  },
   "devDependencies": {
     "chai": "^4.2.0",
+    "eslint-config-ajay": "^1.0.5",
     "mocha": "^6.2.2",
-    "eslint-config-ajay": "^1.0.5"
+    "sinon": "^7.5.0"
   }
 }
