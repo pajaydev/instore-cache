@@ -38,4 +38,26 @@ describe('test ExpirableCache', () => {
         expect(expirableCache.get('SAMPLE_KEY')).equals('Sample121241323qweerttyysdf');
         expect(expirableCache.get('SAMPLE_KEY_EXPIRY')).equals(undefined);
     });
+
+    it('test setting value with less expiry', () => {
+        const expirableCache = new ExpirableCache();
+        expirableCache.set('SAMPLE_KEY', "Sample121241323qweerttyysdf");
+        expirableCache.set('SAMPLE_KEY_EXPIRY', "Expiry121241323qweerttyysdf", 700);
+        expect(expirableCache.get('SAMPLE_KEY_EXPIRY')).equals('Expiry121241323qweerttyysdf');
+        timer.tick(510);
+        // after the cache expired.
+        expect(expirableCache.get('SAMPLE_KEY')).equals('Sample121241323qweerttyysdf');
+        expect(expirableCache.get('SAMPLE_KEY_EXPIRY')).equals('Expiry121241323qweerttyysdf');
+        timer.tick(210);
+        expect(expirableCache.get('SAMPLE_KEY_EXPIRY')).equals(undefined);
+    });
+
+    it('test expiry by setting globally', () => {
+        const expirableCache = new ExpirableCache({ expireTime: 500 });
+        expirableCache.set('SAMPLE_KEY', "Sample121241323qweerttyysdf");
+        expect(expirableCache.get('SAMPLE_KEY')).equals('Sample121241323qweerttyysdf');
+        timer.tick(510);
+        // after the cache expired.
+        expect(expirableCache.get('SAMPLE_KEY')).equals(undefined);
+    });
 });

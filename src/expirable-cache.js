@@ -1,8 +1,24 @@
 'use strict';
 
+/**
+     * This function stores the value in inmemory, we can specify the time the 
+     * stored value is going to expire and call a callback.
+     * Mostly this function is used when you want to store the token for a particular time
+     * and regenerate the token when its expired.
+     *
+     * @function
+     * @name ExpirableCache
+     *
+     * @param {object} [options] - options passed to function
+     * @param {object} [options.expireTime] - to set the expiry time globally
+     * @param {function} [options.callback] - callback will be executed when the value is expired.
+     *
+*/
 class ExpirableCache {
     constructor(options) {
         this._memory = new Map();
+        // set the expiry time.
+        this.setExpiryTime(options && options.expireTime);
         this._callback = (options && options.callback) || (() => { });
     }
 
@@ -10,9 +26,10 @@ class ExpirableCache {
         const cached = this._memory.get(key);
         if (cached) {
             // no expiry is set.
-            if (!cached.expiry) return cached.value;
+            if (!cached.expiry && !this._expTm) return cached.value;
+            const expireTime = cached.expiry || this._expTm;
             // check the cached value is not expired.
-            if (cached.expiry >= Date.now()) {
+            if (expireTime >= Date.now()) {
                 return cached.value;
             } else {
                 // delete the key and call the callback;
@@ -43,6 +60,10 @@ class ExpirableCache {
 
     size() {
         return this._memory.size;
+    }
+
+    setExpiryTime(time) {
+        this._expTm = time ? time + Date.now() : null;
     }
 }
 
