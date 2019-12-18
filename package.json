@@ -7,6 +7,16 @@
   "scripts": {
     "test": "mocha test.js"
   },
+  "keywords": [
+    "memory",
+    "cache",
+    "expiry",
+    "token"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:pajaydev/instore-cache.git"
+  },
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint-config-ajay": "^1.0.5",

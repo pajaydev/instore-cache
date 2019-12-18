@@ -60,4 +60,17 @@ describe('test ExpirableCache', () => {
         // after the cache expired.
         expect(expirableCache.get('SAMPLE_KEY')).equals(undefined);
     });
+
+    it('test calling the callback', () => {
+        function _callback() { };
+        const callbackSpy = sinon.spy(_callback)
+        expect(callbackSpy.calledOnce).to.be.false;
+        const expirableCache = new ExpirableCache({ expireTime: 500, callback: callbackSpy });
+        expirableCache.set('SAMPLE_KEY', "Sample121241323qweerttyysdf");
+        expect(expirableCache.get('SAMPLE_KEY')).equals('Sample121241323qweerttyysdf');
+        timer.tick(510);
+        // after the cache expired.
+        expect(expirableCache.get('SAMPLE_KEY')).equals(undefined);
+        expect(callbackSpy.calledOnce).to.be.true;
+    });
 });
